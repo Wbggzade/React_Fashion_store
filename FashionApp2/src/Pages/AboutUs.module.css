@@ -1,104 +1,242 @@
 
 
-.aboutSection {
-  background-color: #fdfdfd;
-  padding: 100px 0;
+.aboutUsPage {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  min-height: 100vh;
 }
 
-.innerContainer, .innerContainerReverse {
-  display: flex;
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 0 0 1rem;
+  font-weight: 300;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--color-muted-text);
+  margin: 0 0 2rem;
+}
+
+.accentLine {
+  width: 100px;
+  height: 4px;
+  background-color: var(--color-yellow);
+  margin: 0 auto;
+}
+
+.brandStory {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding: 4rem 1rem;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 40px;
 }
 
-.imageContainer {
-  width: 45%;
-  padding: 20px;
+.storyContent h2 {
+  font-size: 2.5rem;
+  margin: 0 0 2rem;
+  font-weight: 300;
 }
 
-.image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
+.storyContent p {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: var(--color-muted-text);
 }
 
-.textContainer, .textContainerReverse {
-  width: 45%;
-  padding: 20px;
-}
-
-.textContainer h1 {
-  margin-bottom: 30px;
-  font-size: 30px;
-  font-weight: 900;
-}
-
-.text {
-  font-size: 13px;
-  color: #545454;
-  line-height: 30px;
-  text-align: justify;
-  margin-bottom: 40px;
-}
-
-.skills {
+.storyImage {
   display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 13px;
+  justify-content: center;
+  align-items: center;
 }
 
-/* New section for the bio text */
-.bioSection {
-  padding: 20px;
-  background-color: #f4f4f4;
+.placeholderImage {
+  width: 100%;
+  height: 300px;
+  background-color: #f5f5f5;
+  border: 1px solid var(--color-light-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 8px;
 }
 
-.bioText {
-  font-size: 15px;
-  color: #545454;
-  line-height: 30px;
-  text-align: justify;
-  margin-bottom: 20px;
+.placeholderImage span {
+  color: var(--color-muted-text);
+  font-size: 1.1rem;
 }
 
-.innerContainerReverse {
-  flex-direction: row-reverse; /* This reverses the layout */
+.values {
+  padding: 4rem 1rem;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+  text-align: center;
 }
 
-.textContainerReverse {
-  order: 1; /* Ensures text is on the left when reversed */
+.values h2 {
+  font-size: 2.5rem;
+  margin: 0 0 3rem;
+  font-weight: 300;
 }
 
-@media screen and (max-width: 1200px) {
-  .innerContainer, .innerContainerReverse {
-    flex-direction: column;
-    align-items: center;
-  }
-  .imageContainer, .textContainer, .textContainerReverse {
-    width: 80%;
-  }
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
-@media screen and (max-width: 1000px) {
-  .aboutSection {
-    padding: 80px 20px;
-  }
-  .innerContainer, .innerContainerReverse {
-    flex-direction: column;
-    align-items: center;
-  }
+.valueCard {
+  border: 1px solid var(--color-light-border);
+  padding: 2rem;
+  text-align: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  position: relative;
 }
 
-@media screen and (max-width: 600px) {
-  .aboutSection {
-    padding: 60px 10px;
+.valueCard:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.valueCard h3 {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.valueCard p {
+  margin: 0;
+  color: var(--color-muted-text);
+  line-height: 1.5;
+}
+
+.cardAccent {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 4px;
+  background-color: var(--color-yellow);
+  transition: width 0.2s;
+}
+
+.valueCard:hover .cardAccent {
+  width: 100px;
+}
+
+.whyChooseUs {
+  padding: 4rem 1rem;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+  text-align: center;
+  background-color: #fafafa;
+  border-radius: 8px;
+}
+
+.whyChooseUs h2 {
+  font-size: 2.5rem;
+  margin: 0 0 3rem;
+  font-weight: 300;
+}
+
+.infoBlocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.infoBlock {
+  padding: 1.5rem;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.infoBlock p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-black);
+}
+
+.cta {
+  padding: 4rem 1rem;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cta p {
+  font-size: 1.3rem;
+  margin: 0 0 2rem;
+  color: var(--color-muted-text);
+}
+
+.ctaButton {
+  background-color: var(--color-yellow);
+  color: var(--color-black);
+  border: 1px solid var(--color-yellow);
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.ctaButton:hover {
+  background-color: var(--color-yellow-hover);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
   }
-  .innerContainer, .innerContainerReverse {
-    flex-direction: column;
-    align-items: center;
+
+  .brandStory {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .storyContent h2 {
+    font-size: 2rem;
+  }
+
+  .values h2 {
+    font-size: 2rem;
+  }
+
+  .whyChooseUs h2 {
+    font-size: 2rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .infoBlocks {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .placeholderImage {
+    height: 200px;
   }
 }
 

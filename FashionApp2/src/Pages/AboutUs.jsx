@@ -1,70 +1,85 @@
-import styles from './AboutUs.module.css'; // Import CSS module for AboutUs styling
+import React from 'react';
+import styles from './AboutUs.module.css';
 
 const AboutUs = () => {
+  const values = [
+    {
+      title: 'Quality Materials',
+      description: 'We use only the finest fabrics and materials to ensure durability and comfort in every piece.'
+    },
+    {
+      title: 'Modern Design',
+      description: 'Our designs blend contemporary trends with timeless elegance for versatile, stylish looks.'
+    },
+    {
+      title: 'Customer First',
+      description: 'Your satisfaction is our priority. We provide exceptional service and support at every step.'
+    }
+  ];
+
+  const whyChooseUs = [
+    'New seasonal collections updated regularly',
+    'Premium curated pieces from top designers',
+    'Timeless everyday fashion for all occasions'
+  ];
+
   return (
-    <div className={styles.aboutSection}>
-      {/* First Design Section - Image on the left, Text on the right */}
-      <div className={styles.innerContainer}>
-        <div className={styles.imageContainer}>
-          <img src="./public/124-1246858_creative-about-us-hd-png-download.png" alt="About Us" className={styles.image} />
-        </div>
-        <div className={styles.textContainer}>
-          <h1>About Us</h1>
-          <p className={styles.text}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus velit ducimus, enim inventore earum,
-            eligendi nostrum pariatur necessitatibus eius dicta a voluptates sit deleniti autem error eos totam nisi neque
-            voluptates sit deleniti autem error eos totam nisi neque.
+    <div className={styles.aboutUsPage}>
+      <section className={styles.hero}>
+        <h1>About Our Brand</h1>
+        <p>Crafting timeless fashion with passion and precision</p>
+        <div className={styles.accentLine}></div>
+      </section>
+
+      <section className={styles.brandStory}>
+        <div className={styles.storyContent}>
+          <h2>Our Story</h2>
+          <p>
+            Founded with a vision to redefine modern fashion, our brand combines innovative design
+            with exceptional craftsmanship. We believe that fashion should be accessible, sustainable,
+            and empowering for everyone.
           </p>
-          <div className={styles.skills}>
-            <span>Web Design</span>
-            <span>Photoshop &amp; Illustrator</span>
-            <span>Coding</span>
+          <p>
+            From our humble beginnings to becoming a trusted name in fashion, we've remained committed
+            to quality, creativity, and customer satisfaction. Every piece in our collection tells a story
+            of dedication and style.
+          </p>
+        </div>
+        <div className={styles.storyImage}>
+          <div className={styles.placeholderImage}>
+            <span>Brand Story Image</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* New Div Section with Bio Text */}
-      <div className={styles.bioSection}>
-        <p className={styles.bioText}>
-          Born near Pristina, Kosovo’s capital, Teuta is one of nine children who grew up with humble beginnings.
-          With a mother who focused on being a stay-at-home parent and a father who worked as a teacher, at an early age,
-          she taught herself to create clothing from old garments and scrap pieces for her siblings and herself.
-          She continued making pieces and wearing them through middle school and high school, garnering endless compliments
-          and requests from her friends and siblings. She always had the dream in mind to one day open her own boutique selling her handmade designs.
-        </p>
-      </div>
-
-      {/* Second Design Section - Reverse: Image on the right, Text on the left */}
-      <div className={styles.innerContainerReverse}>
-        <div className={styles.textContainerReverse}>
-          <h1>About Us</h1>
-          <p className={styles.text}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus velit ducimus, enim inventore earum,
-            eligendi nostrum pariatur necessitatibus eius dicta a voluptates sit deleniti autem error eos totam nisi neque
-            voluptates sit deleniti autem error eos totam nisi neque.
-          </p>
-          <div className={styles.skills}>
-            <span>Web Design</span>
-            <span>Photoshop &amp; Illustrator</span>
-            <span>Coding</span>
-          </div>
+      <section className={styles.values}>
+        <h2>Our Values</h2>
+        <div className={styles.valuesGrid}>
+          {values.map((value, index) => (
+            <div key={index} className={styles.valueCard}>
+              <h3>{value.title}</h3>
+              <p>{value.description}</p>
+              <div className={styles.cardAccent}></div>
+            </div>
+          ))}
         </div>
-        <div className={styles.imageContainer}>
-          <img src="./public/124-1246858_creative-about-us-hd-png-download.png" alt="About Us" className={styles.image} />
+      </section>
+
+      <section className={styles.whyChooseUs}>
+        <h2>Why Choose Us</h2>
+        <div className={styles.infoBlocks}>
+          {whyChooseUs.map((item, index) => (
+            <div key={index} className={styles.infoBlock}>
+              <p>{item}</p>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* New Div Section with Bio Text (same as above) */}
-      <div className={styles.bioSection}>
-        <p className={styles.bioText}>
-          Born near Pristina, Kosovo’s capital, Teuta is one of nine children who grew up with humble beginnings.
-          With a mother who focused on being a stay-at-home parent and a father who worked as a teacher, at an early age,
-          she taught herself to create clothing from old garments and scrap pieces for her siblings and herself.
-          She continued making pieces and wearing them through middle school and high school, garnering endless compliments
-          and requests from her friends and siblings. She always had the dream in mind to one day open her own boutique selling her handmade designs.
-        </p>
-      </div>
-
+      <section className={styles.cta}>
+        <p>Ready to discover your perfect style?</p>
+        <button className={styles.ctaButton}>Explore Collection</button>
+      </section>
     </div>
   );
 };
