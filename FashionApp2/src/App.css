@@ -17,8 +17,8 @@ html, body {
 
 footer {
   margin-top: auto;  
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
   padding: 20px;
   text-align: center;
   margin :0 ;

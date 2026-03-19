@@ -1,10 +1,23 @@
 :root {
-  --color-black: rgb(45, 30, 15);
-  --color-white: rgb(244, 236, 228);
-  --color-yellow: rgb(90, 60, 30);
-  --color-yellow-hover: rgb(72, 48, 24);
-  --color-muted-text: rgb(120, 95, 70);
-  --color-light-border: rgb(176, 150, 124);
+  --color-bg-light: #FFFFFF;
+  --color-bg-muted: #F9FAFB;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-border: #E5E7EB;
+  --color-primary: #1F2937;
+  --color-primary-hover: #111827;
+  --color-accent: #E11D48;
+  --color-accent-hover: #BE123C;
+  --color-secondary: #6B7280;
+  --color-secondary-tint: #F3F4F6;
+  --color-success: #10B981;
+  --color-error: #DC2626;
+  --color-black: var(--color-text-primary);
+  --color-white: var(--color-bg-light);
+  --color-yellow: var(--color-accent);
+  --color-yellow-hover: var(--color-accent-hover);
+  --color-muted-text: var(--color-text-secondary);
+  --color-light-border: var(--color-border);
   --section-max-width: 1200px;
 }
 
@@ -17,34 +30,35 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-muted);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  color: var(--color-black);
+  color: var(--color-text-primary);
   line-height: 1.5;
 }
 
 a {
-  color: var(--color-black);
+  color: var(--color-text-primary);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-yellow);
+  color: var(--color-primary);
 }
 
 button {
-  background-color: var(--color-yellow);
-  color: var(--color-black);
-  border: 1px solid var(--color-yellow);
   padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
   font-family: inherit;
   font-size: inherit;
+  border-radius: 8px;
 }
 
-button:hover {
-  background-color: var(--color-yellow-hover);
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(225, 29, 72, 0.2);
+  outline-offset: 2px;
 }
 
 img {

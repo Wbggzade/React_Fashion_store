@@ -1,6 +1,6 @@
 .customerCarePage {
-  background-color: var(--color-white);
-  color: var(--color-black);
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-primary);
   min-height: 100vh;
 }
 
@@ -26,7 +26,7 @@
 .accentLine {
   width: 100px;
   height: 4px;
-  background-color: var(--color-yellow);
+  background-color: var(--color-accent);
   margin: 0 auto;
 }
 
@@ -40,11 +40,11 @@
 }
 
 .supportCard {
-  border: 1px solid var(--color-light-border);
+  border: 1px solid var(--color-border);
   padding: 2rem;
   text-align: center;
   transition: box-shadow 0.2s, transform 0.2s;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-light);
   border-radius: 8px;
 }
 
@@ -61,7 +61,7 @@
 
 .supportCard p {
   margin: 0;
-  color: var(--color-muted-text);
+  color: var(--color-text-secondary);
   line-height: 1.5;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .faqItem {
-  border-bottom: 1px solid var(--color-light-border);
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: 1.5rem;
 }
 
@@ -104,7 +104,7 @@
 
 .faqItem p {
   margin: 0;
-  color: var(--color-muted-text);
+  color: var(--color-text-secondary);
   line-height: 1.5;
 }
 
@@ -113,8 +113,9 @@
   max-width: var(--section-max-width);
   margin: 0 auto;
   text-align: center;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-light);
   border-radius: 8px;
+  border: 1px solid var(--color-border);
 }
 
 .contact h2 {
@@ -133,9 +134,9 @@
 }
 
 .contactBtn {
-  background-color: var(--color-yellow);
-  color: var(--color-black);
-  border: 1px solid var(--color-yellow);
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+  border: 1px solid var(--color-primary);
   padding: 0.75rem 2rem;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -146,7 +147,7 @@
 }
 
 .contactBtn:hover {
-  background-color: var(--color-yellow-hover);
+  background-color: var(--color-primary-hover);
 }
 
 /* Responsive adjustments */

@@ -1,5 +1,6 @@
 .homePage {
   width: 100%;
+  background-color: var(--color-bg-muted);
 }
 
 .homeSection {
@@ -14,12 +15,12 @@
 .sectionHeader h2 {
   font-size: 2rem;
   margin-bottom: 0.75rem;
-  color: var(--color-black);
+  color: var(--color-text-primary);
 }
 
 .sectionHeader p {
   font-size: 1rem;
-  color: var(--color-muted-text);
+  color: var(--color-text-secondary);
   max-width: 650px;
   margin: 0 auto;
   line-height: 1.6;
