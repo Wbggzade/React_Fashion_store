@@ -4,8 +4,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #1a1a1a; 
-  color: #fff;
+  background-color: var(--color-black);
+  color: var(--color-white);
   height: 70px; 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   position: sticky;
@@ -26,7 +26,7 @@
 .nav-span {
   font-size: 24px;
   font-weight: bold;
-  color: #f5a623; 
+  color: var(--color-yellow);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-left: 15px; 
@@ -48,7 +48,7 @@
   font-size: 18px;
   font-weight: 500;
   text-decoration: none;
-  color: #f5f5f5;
+  color: var(--color-white);
   position: relative;
   padding: 8px 16px;
   border-radius: 4px;
@@ -57,8 +57,8 @@
 
 
 .link:hover {
-  color: #f5a623; 
-  background-color: rgba(245, 166, 35, 0.1); 
+  color: var(--color-yellow);
+  background-color: rgba(90, 60, 30, 0.12);
 }
 
 
@@ -69,7 +69,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #f5a623;
+  background-color: var(--color-yellow);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -87,12 +87,112 @@
   align-items: center;
 }
 
+.bagWrapper {
+  position: relative;
+}
+
+.bagPanel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 320px;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  padding: 16px;
+  z-index: 20;
+}
+
+.bagHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.bagHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.closeButton {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.emptyBag {
+  margin: 0;
+  color: var(--color-muted-text);
+}
+
+.bagItems {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.bagItem {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.bagImage {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--color-light-border);
+}
+
+.bagDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.bagDetails p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.bagDetails span {
+  color: var(--color-muted-text);
+  font-size: 0.92rem;
+}
+
+.bagFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-light-border);
+}
+
+.removeButton {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
 
 button {
   padding: 8px 16px;
-  background-color: #f5a623; 
+  background-color: var(--color-yellow);
   border: none;
-  color: white;
+  color: var(--color-black);
   font-size: 14px;
   font-weight: bold;
   border-radius: 4px;
@@ -102,7 +202,7 @@ button {
 
 
 button:hover {
-  background-color: #e59400;
+  background-color: var(--color-yellow-hover);
 }
 
 
@@ -123,6 +223,12 @@ button:hover {
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
+  }
+
+  .bagPanel {
+    right: 50%;
+    transform: translateX(50%);
+    width: min(320px, calc(100vw - 32px));
   }
 
   .nav-span {

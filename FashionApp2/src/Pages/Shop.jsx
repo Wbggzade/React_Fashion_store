@@ -1,10 +1,15 @@
 
 
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './Shop.module.css';
+import { addToCart } from '../store/cartSlice';
 
 const Shop = () => {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const products = [
     { id: 1, name: 'Elegant Dress', category: 'Women', price: 89.99, image: 'https://via.placeholder.com/300x200?text=Elegant+Dress' },
@@ -18,6 +23,25 @@ const Shop = () => {
   ];
 
   const filteredProducts = activeFilter === 'All' ? products : products.filter(product => product.category === activeFilter);
+
+  const handleOpenProduct = (product) => {
+    setSelectedProduct(product);
+    setQuantity(1);
+  };
+
+  const handleCloseProduct = () => {
+    setSelectedProduct(null);
+    setQuantity(1);
+  };
+
+  const handleConfirmAddToCart = () => {
+    if (!selectedProduct) {
+      return;
+    }
+
+    dispatch(addToCart({ ...selectedProduct, quantity }));
+    handleCloseProduct();
+  };
 
   return (
     <div className={styles.shopPage}>
@@ -67,10 +91,50 @@ const Shop = () => {
             <h3>{product.name}</h3>
             <p className={styles.category}>{product.category}</p>
             <p className={styles.price}>${product.price}</p>
-            <button className={styles.addToCartBtn}>Add to Cart</button>
+            <button
+              className={styles.addToCartBtn}
+              onClick={() => handleOpenProduct(product)}
+            >
+              Add to Cart
+            </button>
           </div>
         ))}
       </section>
+
+      {selectedProduct && (
+        <div className={styles.modalOverlay} onClick={handleCloseProduct}>
+          <div className={styles.modalCard} onClick={(event) => event.stopPropagation()}>
+            <img src={selectedProduct.image} alt={selectedProduct.name} className={styles.modalImage} />
+            <div className={styles.modalContent}>
+              <p className={styles.modalLabel}>Confirm selection</p>
+              <h2>{selectedProduct.name}</h2>
+              <p className={styles.modalCategory}>{selectedProduct.category}</p>
+              <p className={styles.modalPrice}>${selectedProduct.price}</p>
+
+              <label className={styles.quantityLabel} htmlFor="product-quantity">
+                Quantity
+              </label>
+              <input
+                id="product-quantity"
+                type="number"
+                min="1"
+                value={quantity}
+                className={styles.quantityInput}
+                onChange={(event) => setQuantity(Math.max(Number(event.target.value) || 1, 1))}
+              />
+
+              <div className={styles.modalActions}>
+                <button type="button" className={styles.secondaryButton} onClick={handleCloseProduct}>
+                  Cancel
+                </button>
+                <button type="button" className={styles.primaryButton} onClick={handleConfirmAddToCart}>
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

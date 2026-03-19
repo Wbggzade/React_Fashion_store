@@ -113,7 +113,7 @@
   max-width: var(--section-max-width);
   margin: 0 auto;
   text-align: center;
-  background-color: #fafafa;
+  background-color: var(--color-white);
   border-radius: 8px;
 }
 

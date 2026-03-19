@@ -35,8 +35,9 @@
   .card_item {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: var(--color-yellow);
     width: 100%;
+    min-height: 380px;
     border-radius: 6px;
     box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
     overflow: hidden;
@@ -60,18 +61,23 @@
     flex-direction: column;
     padding: 1rem;
     line-height: 1.5em;
+    background-color: var(--color-yellow);
   }
 
   .card_title {
     font-size: 25px;
     line-height: 1.1em;
-    color: #32325d;
+    color: var(--color-white);
     margin-bottom: 0.2em;
+  }
+
+  .card_intro {
+    color: var(--color-white);
   }
 
   
   .card_image{
-    height: 200px;
+    height: 280px;
     overflow: hidden;
     background-size: cover;
     background-position: center;

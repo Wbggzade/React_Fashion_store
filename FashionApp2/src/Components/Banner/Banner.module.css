@@ -1,13 +1,14 @@
 .banner {
     height: 720px;
-    background-image: url('https://via.placeholder.com/1500x720');
-    background-color: transparent; 
+  background-image: url('https://via.placeholder.com/1500x720');
+  background-color: transparent;
     background-size: cover;
     background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;  
+    z-index: 1;
     max-width: 100%;  
     margin: 0;      
     padding: 0
@@ -21,18 +22,18 @@
     width: 80%; 
     max-width: 450px;
     height: 450px; 
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: var(--color-black);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
-    color: white;
+    color: var(--color-white);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     right: 10%;
     left: 1000px;
-    z-index: 10;
+    z-index: 2;
 
   }
   
@@ -45,8 +46,8 @@
   
   
   .quote_box button {
-    background-color: #f59b2c; 
-    color: white;
+    background-color: var(--color-yellow);
+    color: var(--color-white);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -94,6 +95,6 @@
   
   
   .quote_box button:hover {
-    background-color: #d88b2d; 
+    background-color: var(--color-yellow-hover);
   }
 

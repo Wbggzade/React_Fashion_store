@@ -1,10 +1,10 @@
 :root {
-  --color-black: #111111;
-  --color-white: #FFFFFF;
-  --color-yellow: #FFC107;
-  --color-yellow-hover: #E6AC00;
-  --color-muted-text: #666666;
-  --color-light-border: #EAEAEA;
+  --color-black: rgb(45, 30, 15);
+  --color-white: rgb(244, 236, 228);
+  --color-yellow: rgb(90, 60, 30);
+  --color-yellow-hover: rgb(72, 48, 24);
+  --color-muted-text: rgb(120, 95, 70);
+  --color-light-border: rgb(176, 150, 124);
   --section-max-width: 1200px;
 }
 
