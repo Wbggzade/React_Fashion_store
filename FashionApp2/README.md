@@ -1,7 +1,7 @@
 # React Fashion Store
 
 A modern **fashion storefront UI** built with **React and Vite**.  
-This project demonstrates component-based architecture, reusable UI sections, and a clean design system using **black, white, and yellow**.
+This project demonstrates component-based architecture, reusable UI sections, global state management with **Redux Toolkit**, and a clean design system using **black, white, and yellow**.
 
 The goal of this project is to practice building a **realistic multi-page e-commerce frontend interface** using React.
 
@@ -16,7 +16,10 @@ The goal of this project is to practice building a **realistic multi-page e-comm
 - Multi-page navigation using **React Router**
 - Modular **component architecture**
 - Responsive layout
-- Product grid UI
+- Product grid UI with add-to-cart support
+- **Shopping cart** with add / remove item actions
+- **Redux Toolkit** global state management
+- Cart state persisted to **localStorage**
 - Reusable components
 - CSS Modules styling
 - Clean design system
@@ -55,10 +58,14 @@ Support information and FAQ sections.
 
 ## Tech Stack
 
-- React
+- React 18
 - Vite
-- React Router
-- JavaScript (ES6)
+- React Router DOM v6
+- Redux Toolkit
+- React Redux
+- react-responsive-carousel
+- react-multi-carousel
+- JavaScript (ES6+)
 - CSS Modules
 
 ---
@@ -79,6 +86,10 @@ src
  │   ├ Shop
  │   ├ AboutUs
  │   ├ CustomerCare
+ │
+ ├ store
+ │   ├ store.js          # Redux store (with localStorage persistence)
+ │   └ cartSlice.js      # Cart reducer — addToCart / removeFromCart
  │
  ├ App.jsx
  ├ main.jsx
@@ -124,8 +135,8 @@ http://localhost:5173
 ## Future Improvements
 
 - Product filtering
-- Shopping cart functionality
 - Product detail page
+- Quantity controls inside cart
 - Backend API integration
 - Authentication system
 - Deployment
