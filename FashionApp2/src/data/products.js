@@ -1,0 +1,58 @@
+export const products = [
+  {
+    id: 1,
+    name: 'Elegant Dress',
+    category: 'Women',
+    price: 89.99,
+    image: 'https://via.placeholder.com/300x200?text=Elegant+Dress',
+  },
+  {
+    id: 2,
+    name: 'Casual Blouse',
+    category: 'Women',
+    price: 49.99,
+    image: 'https://via.placeholder.com/300x200?text=Casual+Blouse',
+  },
+  {
+    id: 3,
+    name: 'Slim Fit Jeans',
+    category: 'Men',
+    price: 79.99,
+    image: 'https://via.placeholder.com/300x200?text=Slim+Fit+Jeans',
+  },
+  {
+    id: 4,
+    name: 'Leather Jacket',
+    category: 'Men',
+    price: 129.99,
+    image: 'https://via.placeholder.com/300x200?text=Leather+Jacket',
+  },
+  {
+    id: 5,
+    name: 'Designer Handbag',
+    category: 'Accessories',
+    price: 199.99,
+    image: 'https://via.placeholder.com/300x200?text=Designer+Handbag',
+  },
+  {
+    id: 6,
+    name: 'Stylish Sunglasses',
+    category: 'Accessories',
+    price: 59.99,
+    image: 'https://via.placeholder.com/300x200?text=Stylish+Sunglasses',
+  },
+  {
+    id: 7,
+    name: 'Summer Sandals',
+    category: 'New Arrivals',
+    price: 39.99,
+    image: 'https://via.placeholder.com/300x200?text=Summer+Sandals',
+  },
+  {
+    id: 8,
+    name: 'Classic Watch',
+    category: 'New Arrivals',
+    price: 149.99,
+    image: 'https://via.placeholder.com/300x200?text=Classic+Watch',
+  },
+];

@@ -1,13 +1,14 @@
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Navbar.module.css';
-import { removeFromCart } from '../../store/cartSlice';
+import { removeFromCart, incrementQuantity, decrementQuantity, clearCart } from '../../store/cartSlice';
+
+const navLinkClass = ({ isActive }) => isActive ? styles.activeLink : styles.link;
 
 const Navbar = () => {
   const [isBagOpen, setIsBagOpen] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
   const bagCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -16,48 +17,70 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.nav_logo}>
-        <span className={styles.nav_span}>Fashion App</span>
+        <NavLink to="/" className={styles.logoLink}>
+          <span className={styles.nav_span}>Fashion App</span>
+        </NavLink>
       </div>
       <ul className={styles.Menu}>
-        <li className={styles.link}>
-          <Link to="/" className={styles.link}>Home</Link>
+        <li>
+          <NavLink to="/" end className={navLinkClass}>Home</NavLink>
         </li>
-        <li className={styles.link}>
-          <Link to="/shop" className={styles.link}>Shop</Link>
+        <li>
+          <NavLink to="/shop" className={navLinkClass}>Shop</NavLink>
         </li>
-        <li className={styles.link}>
-          <Link to="/customer-care" className={styles.link}>Customer Care</Link>
+        <li>
+          <NavLink to="/customer-care" className={navLinkClass}>Customer Care</NavLink>
         </li>
-        <li className={styles.link}>
-          <Link to="/about-us" className={styles.link}>About Us</Link>
+        <li>
+          <NavLink to="/about-us" className={navLinkClass}>About Us</NavLink>
         </li>
       </ul>
       <div className={styles.navIcons}>
-        <button type="button" onClick={() => navigate('/customer-care')}>Client Services</button>
-        <button type="button" onClick={() => navigate('/shop')}>Browse New In</button>
         <div className={styles.bagWrapper}>
           <button
             type="button"
-            onClick={() => setIsBagOpen((previousValue) => !previousValue)}
+            aria-label={`Open bag, ${bagCount} item${bagCount !== 1 ? 's' : ''}`}
+            aria-expanded={isBagOpen}
+            onClick={() => setIsBagOpen((prev) => !prev)}
           >
             Bag ({bagCount})
           </button>
 
           {isBagOpen && (
-            <div className={styles.bagPanel}>
+            <div className={styles.bagPanel} role="region" aria-label="Shopping bag">
               <div className={styles.bagHeader}>
                 <h3>My Bag</h3>
-                <button
-                  type="button"
-                  className={styles.closeButton}
-                  onClick={() => setIsBagOpen(false)}
-                >
-                  Close
-                </button>
+                <div className={styles.bagHeaderActions}>
+                  {items.length > 0 && (
+                    <button
+                      type="button"
+                      className={styles.clearBag}
+                      onClick={() => dispatch(clearCart())}
+                    >
+                      Clear
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className={styles.closeButton}
+                    onClick={() => setIsBagOpen(false)}
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
 
               {items.length === 0 ? (
-                <p className={styles.emptyBag}>Your bag is empty.</p>
+                <div className={styles.emptyBagState}>
+                  <p className={styles.emptyBag}>Your bag is empty.</p>
+                  <NavLink
+                    to="/shop"
+                    className={styles.emptyBagLink}
+                    onClick={() => setIsBagOpen(false)}
+                  >
+                    Browse the collection &rarr;
+                  </NavLink>
+                </div>
               ) : (
                 <>
                   <div className={styles.bagItems}>
@@ -66,15 +89,34 @@ const Navbar = () => {
                         <img src={item.image} alt={item.title} className={styles.bagImage} />
                         <div className={styles.bagDetails}>
                           <p>{item.title}</p>
-                          <span>Qty: {item.quantity}</span>
-                          <span>${(item.price * item.quantity).toFixed(2)}</span>
+                          <div className={styles.qtyControls}>
+                            <button
+                              type="button"
+                              className={styles.qtyBtn}
+                              aria-label={`Decrease quantity of ${item.title}`}
+                              onClick={() => dispatch(decrementQuantity(item.id))}
+                            >
+                              −
+                            </button>
+                            <span>{item.quantity}</span>
+                            <button
+                              type="button"
+                              className={styles.qtyBtn}
+                              aria-label={`Increase quantity of ${item.title}`}
+                              onClick={() => dispatch(incrementQuantity(item.id))}
+                            >
+                              +
+                            </button>
+                          </div>
+                          <span className={styles.lineTotal}>${(item.price * item.quantity).toFixed(2)}</span>
                         </div>
                         <button
                           type="button"
                           className={styles.removeButton}
+                          aria-label={`Remove ${item.title} from bag`}
                           onClick={() => dispatch(removeFromCart(item.id))}
                         >
-                          X
+                          ✕
                         </button>
                       </div>
                     ))}

@@ -3,26 +3,7 @@ import Carousel from 'react-multi-carousel';
 import { useNavigate } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
 import Styles from './Carousel.module.css';
-
-
-const featuredItems = [
-  {
-    title: 'Signature Outerwear',
-    description: 'Lightweight trench shapes and structured jackets for transitional dressing.'
-  },
-  {
-    title: 'Modern Occasionwear',
-    description: 'Clean evening silhouettes with understated detail and confident finish.'
-  },
-  {
-    title: 'Accessories Update',
-    description: 'Bags, belts, and jewelry designed to sharpen every look in one step.'
-  },
-  {
-    title: 'New In Footwear',
-    description: 'Minimal boots and refined flats built for comfort, polish, and repeat wear.'
-  }
-];
+import { featuredCarouselItems } from '../../data/collections';
 
 
 
@@ -58,7 +39,7 @@ const responsive = {
 
     return(
     <Carousel responsive={responsive}>
-      {featuredItems.map((item) => (
+      {featuredCarouselItems.map((item) => (
         <div key={item.title} className={Styles.card}>
           <div>
             <p className={Styles.label}>Featured</p>

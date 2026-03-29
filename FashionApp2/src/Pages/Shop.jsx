@@ -1,26 +1,16 @@
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './Shop.module.css';
 import { addToCart } from '../store/cartSlice';
+import { products } from '../data/products';
 
 const Shop = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-
-  const products = [
-    { id: 1, name: 'Elegant Dress', category: 'Women', price: 89.99, image: 'https://via.placeholder.com/300x200?text=Elegant+Dress' },
-    { id: 2, name: 'Casual Blouse', category: 'Women', price: 49.99, image: 'https://via.placeholder.com/300x200?text=Casual+Blouse' },
-    { id: 3, name: 'Slim Fit Jeans', category: 'Men', price: 79.99, image: 'https://via.placeholder.com/300x200?text=Slim+Fit+Jeans' },
-    { id: 4, name: 'Leather Jacket', category: 'Men', price: 129.99, image: 'https://via.placeholder.com/300x200?text=Leather+Jacket' },
-    { id: 5, name: 'Designer Handbag', category: 'Accessories', price: 199.99, image: 'https://via.placeholder.com/300x200?text=Designer+Handbag' },
-    { id: 6, name: 'Stylish Sunglasses', category: 'Accessories', price: 59.99, image: 'https://via.placeholder.com/300x200?text=Stylish+Sunglasses' },
-    { id: 7, name: 'Summer Sandals', category: 'New Arrivals', price: 39.99, image: 'https://via.placeholder.com/300x200?text=Summer+Sandals' },
-    { id: 8, name: 'Classic Watch', category: 'New Arrivals', price: 149.99, image: 'https://via.placeholder.com/300x200?text=Classic+Watch' },
-  ];
 
   const filteredProducts = activeFilter === 'All' ? products : products.filter(product => product.category === activeFilter);
 
@@ -42,6 +32,15 @@ const Shop = () => {
     dispatch(addToCart({ ...selectedProduct, quantity }));
     handleCloseProduct();
   };
+
+  useEffect(() => {
+    if (!selectedProduct) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') handleCloseProduct();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProduct]);
 
   return (
     <div className={styles.shopPage}>
@@ -90,12 +89,12 @@ const Shop = () => {
             <img src={product.image} alt={product.name} />
             <h3>{product.name}</h3>
             <p className={styles.category}>{product.category}</p>
-            <p className={styles.price}>${product.price}</p>
+            <p className={styles.price}>${product.price.toFixed(2)}</p>
             <button
               className={styles.addToCartBtn}
               onClick={() => handleOpenProduct(product)}
             >
-              Add to Cart
+              Select Options
             </button>
           </div>
         ))}
@@ -103,13 +102,18 @@ const Shop = () => {
 
       {selectedProduct && (
         <div className={styles.modalOverlay} onClick={handleCloseProduct}>
-          <div className={styles.modalCard} onClick={(event) => event.stopPropagation()}>
+          <div
+            className={styles.modalCard}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-product-name"
+            onClick={(event) => event.stopPropagation()}
+          >
             <img src={selectedProduct.image} alt={selectedProduct.name} className={styles.modalImage} />
             <div className={styles.modalContent}>
-              <p className={styles.modalLabel}>Confirm selection</p>
-              <h2>{selectedProduct.name}</h2>
-              <p className={styles.modalCategory}>{selectedProduct.category}</p>
-              <p className={styles.modalPrice}>${selectedProduct.price}</p>
+              <p className={styles.modalLabel}>{selectedProduct.category}</p>
+              <h2 id="modal-product-name">{selectedProduct.name}</h2>
+              <p className={styles.modalPrice}>${selectedProduct.price.toFixed(2)}</p>
 
               <label className={styles.quantityLabel} htmlFor="product-quantity">
                 Quantity

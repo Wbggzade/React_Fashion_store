@@ -1,28 +1,13 @@
 
-import styles from "./Grid_Cards.module.css" ;
-
-
-const cardContent = [
-  {
-    title: 'Tailored Essentials',
-    description: 'Sharp layers, clean lines, and everyday pieces that bring structure to your weekly wardrobe.'
-  },
-  {
-    title: 'Weekend Softs',
-    description: 'Relaxed knitwear, fluid separates, and easy neutrals made for off-duty styling.'
-  },
-  {
-    title: 'After-Dark Edit',
-    description: 'Statement textures and elevated finishing pieces for evenings that call for a stronger look.'
-  }
-];
+import styles from "./Grid_Cards.module.css";
+import { featuredCollections } from '../../data/collections';
 
 
    const GridCards = () => {
 
     return (
           <div className={styles.container}>
-            {cardContent.map((card) => (
+            {featuredCollections.map((card) => (
               <div key={card.title} className={styles.cards}>
                 <div className={styles.card_item}>
                   <div className={styles.card_image}>
