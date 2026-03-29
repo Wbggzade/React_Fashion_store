@@ -1,12 +1,13 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Navbar.module.css';
 import { removeFromCart } from '../../store/cartSlice';
 
 const Navbar = () => {
   const [isBagOpen, setIsBagOpen] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
   const bagCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -19,21 +20,21 @@ const Navbar = () => {
       </div>
       <ul className={styles.Menu}>
         <li className={styles.link}>
-          <Link to="./" className={styles.link}>Home</Link>
+          <Link to="/" className={styles.link}>Home</Link>
         </li>
         <li className={styles.link}>
-          <Link to="./Shop" className={styles.link}>Shop</Link>
+          <Link to="/shop" className={styles.link}>Shop</Link>
         </li>
         <li className={styles.link}>
-          <Link to="./Customer_care" className={styles.link}>Customer Care</Link>
+          <Link to="/customer-care" className={styles.link}>Customer Care</Link>
         </li>
         <li className={styles.link}>
-          <Link to="./AboutUs" className={styles.link}>About Us</Link>
+          <Link to="/about-us" className={styles.link}>About Us</Link>
         </li>
       </ul>
       <div className={styles.navIcons}>
-        <button>Login</button>
-        <button>Search</button>
+        <button type="button" onClick={() => navigate('/customer-care')}>Client Services</button>
+        <button type="button" onClick={() => navigate('/shop')}>Browse New In</button>
         <div className={styles.bagWrapper}>
           <button
             type="button"

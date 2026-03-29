@@ -16,8 +16,23 @@
   }
 
 
+  .label {
+    margin: 0 0 0.75rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+  }
+
   .card h2 {
     color: var(--color-text-primary);
+    margin-top: 0;
+  }
+
+  .description {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
   }
 
 

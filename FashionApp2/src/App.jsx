@@ -13,20 +13,20 @@ import './App.css';
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Navbar />
 
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Shop" element={<Shop />} />
-          <Route path="/Customer_care" element={<CustomerCare />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/customer-care" element={<CustomerCare />} />
+          <Route path="/about-us" element={<AboutUs />} />
         </Routes>
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

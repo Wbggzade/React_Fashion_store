@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './AboutUs.module.css';
 
 const AboutUs = () => {
+  const navigate = useNavigate();
   const values = [
     {
       title: 'Quality Materials',
@@ -47,7 +49,10 @@ const AboutUs = () => {
         </div>
         <div className={styles.storyImage}>
           <div className={styles.placeholderImage}>
-            <span>Brand Story Image</span>
+            <div>
+              <strong>Studio Notes</strong>
+              <span>Thoughtful tailoring, small-batch edits, and a focus on pieces that earn repeat wear.</span>
+            </div>
           </div>
         </div>
       </section>
@@ -78,7 +83,7 @@ const AboutUs = () => {
 
       <section className={styles.cta}>
         <p>Ready to discover your perfect style?</p>
-        <button className={styles.ctaButton}>Explore Collection</button>
+        <button type="button" className={styles.ctaButton} onClick={() => navigate('/shop')}>Explore the Collection</button>
       </section>
     </div>
   );

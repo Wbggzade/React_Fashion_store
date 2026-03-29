@@ -1,6 +1,26 @@
 
-  
-  .social_links {
+.footer {
+  margin-top: auto;
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+
+.brand {
+  margin: 0;
+  font-weight: 600;
+}
+
+.meta {
+  margin: 8px 0 0;
+  color: rgba(248, 250, 252, 0.78);
+  font-size: 0.95rem;
+}
+
+.social_links {
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -15,17 +35,4 @@
   
   .social_icon:hover {
     color: var(--color-accent);
-  }
-
-  footer {
-    background-color: var(--color-primary);
-    color: var(--color-bg-light);
-    padding: 20px;
-    text-align: center;
-    width: 100%; 
-    position: relative; 
-  }
-  
-  footer p {
-    margin: 0;
   }

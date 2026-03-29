@@ -78,7 +78,7 @@ const CustomerCare = () => {
           <p><strong>Phone:</strong> 1-800-FASHION</p>
           <p><strong>Business Hours:</strong> Mon-Fri 9AM-6PM EST</p>
         </div>
-        <button className={styles.contactBtn}>Get in Touch</button>
+        <a className={styles.contactBtn} href="mailto:support@fashionstore.com">Email Support</a>
       </section>
     </div>
   );
