@@ -84,20 +84,27 @@ const Shop = () => {
       </section>
 
       <section className={styles.products}>
-        {filteredProducts.map(product => (
-          <div key={product.id} className={styles.productCard}>
-            <img src={product.image} alt={product.name} />
-            <h3>{product.name}</h3>
-            <p className={styles.category}>{product.category}</p>
-            <p className={styles.price}>${product.price.toFixed(2)}</p>
-            <button
-              className={styles.addToCartBtn}
-              onClick={() => handleOpenProduct(product)}
-            >
-              Select Options
-            </button>
+        {filteredProducts.length === 0 ? (
+          <div className={styles.emptyProductsState}>
+            <h3>No items found</h3>
+            <p>Try a different category to browse more of the collection.</p>
           </div>
-        ))}
+        ) : (
+          filteredProducts.map(product => (
+            <div key={product.id} className={styles.productCard}>
+              <img src={product.image} alt={product.name} />
+              <h3>{product.name}</h3>
+              <p className={styles.category}>{product.category}</p>
+              <p className={styles.price}>${product.price.toFixed(2)}</p>
+              <button
+                className={styles.addToCartBtn}
+                onClick={() => handleOpenProduct(product)}
+              >
+                Select Options
+              </button>
+            </div>
+          ))
+        )}
       </section>
 
       {selectedProduct && (

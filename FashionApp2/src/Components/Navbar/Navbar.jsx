@@ -1,14 +1,20 @@
 
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Navbar.module.css';
-import { removeFromCart, incrementQuantity, decrementQuantity, clearCart } from '../../store/cartSlice';
+import {
+  removeFromCart,
+  incrementItemQuantity,
+  decrementItemQuantity,
+  clearCart,
+} from '../../store/cartSlice';
 
 const navLinkClass = ({ isActive }) => isActive ? styles.activeLink : styles.link;
 
 const Navbar = () => {
   const [isBagOpen, setIsBagOpen] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
   const bagCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -36,6 +42,8 @@ const Navbar = () => {
         </li>
       </ul>
       <div className={styles.navIcons}>
+        <button type="button" onClick={() => navigate('/customer-care')}>Client Services</button>
+        <button type="button" onClick={() => navigate('/shop')}>Browse New In</button>
         <div className={styles.bagWrapper}>
           <button
             type="button"
@@ -57,7 +65,7 @@ const Navbar = () => {
                       className={styles.clearBag}
                       onClick={() => dispatch(clearCart())}
                     >
-                      Clear
+                      Clear Bag
                     </button>
                   )}
                   <button
@@ -94,7 +102,7 @@ const Navbar = () => {
                               type="button"
                               className={styles.qtyBtn}
                               aria-label={`Decrease quantity of ${item.title}`}
-                              onClick={() => dispatch(decrementQuantity(item.id))}
+                              onClick={() => dispatch(decrementItemQuantity(item.id))}
                             >
                               −
                             </button>
@@ -103,7 +111,7 @@ const Navbar = () => {
                               type="button"
                               className={styles.qtyBtn}
                               aria-label={`Increase quantity of ${item.title}`}
-                              onClick={() => dispatch(incrementQuantity(item.id))}
+                              onClick={() => dispatch(incrementItemQuantity(item.id))}
                             >
                               +
                             </button>
