@@ -1,0 +1,46 @@
+.loginCard {
+  width: min(460px, 100%);
+  margin: 2rem auto;
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.loginCard h1 {
+  margin: 0 0 0.5rem;
+}
+
+.loginCard p {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form input {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.form button {
+  margin-top: 0.75rem;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.error {
+  margin: 0.25rem 0 0;
+  color: var(--color-error);
+}

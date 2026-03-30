@@ -12,7 +12,26 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+const defaultAllowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+const envAllowedOrigins = (process.env.FRONTEND_ORIGIN || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [...new Set([...defaultAllowedOrigins, ...envAllowedOrigins])];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('Not allowed by CORS'));
+    },
+  })
+);
 app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);

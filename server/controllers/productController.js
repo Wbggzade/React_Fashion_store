@@ -1,4 +1,12 @@
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import mongoose from 'mongoose';
 import Product from '../models/Product.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadsDir = path.join(__dirname, '..', 'uploads');
 
 const getProducts = async (_req, res, next) => {
   try {
@@ -11,6 +19,10 @@ const getProducts = async (_req, res, next) => {
 
 const getProductById = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid product id' });
+    }
+
     const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -26,12 +38,25 @@ const createProduct = async (req, res, next) => {
   try {
     const { name, price, category, description } = req.body;
 
+    if (!name || !category || price === undefined || price === null || price === '') {
+      return res.status(400).json({ message: 'Name, price, and category are required' });
+    }
+
+    const numericPrice = Number(price);
+    if (Number.isNaN(numericPrice) || numericPrice < 0) {
+      return res.status(400).json({ message: 'Price must be a valid non-negative number' });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'Product image is required' });
+    }
+
     const product = await Product.create({
-      name,
-      price,
-      category,
-      description,
-      image: req.file ? `/uploads/${req.file.filename}` : '',
+      name: String(name).trim(),
+      price: numericPrice,
+      category: String(category).trim(),
+      description: description ? String(description).trim() : '',
+      image: `/uploads/${req.file.filename}`,
     });
 
     return res.status(201).json(product);
@@ -40,34 +65,25 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-const updateProduct = async (req, res, next) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-
-    product.name = req.body.name ?? product.name;
-    product.price = req.body.price ?? product.price;
-    product.category = req.body.category ?? product.category;
-    product.description = req.body.description ?? product.description;
-
-    if (req.file) {
-      product.image = `/uploads/${req.file.filename}`;
-    }
-
-    const updated = await product.save();
-    return res.status(200).json(updated);
-  } catch (error) {
-    return next(error);
-  }
-};
-
 const deleteProduct = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid product id' });
+    }
+
     const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
+    }
+
+    if (product.image) {
+      const imageFilename = path.basename(product.image);
+      const imagePath = path.join(uploadsDir, imageFilename);
+      try {
+        await fs.unlink(imagePath);
+      } catch {
+        // Keep delete safe even if file was already removed.
+      }
     }
 
     await product.deleteOne();
@@ -81,6 +97,5 @@ export {
   getProducts,
   getProductById,
   createProduct,
-  updateProduct,
   deleteProduct,
 };

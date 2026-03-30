@@ -4,14 +4,18 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './Shop.module.css';
 import { addToCart } from '../store/cartSlice';
-import { products } from '../data/products';
+import { fetchProducts } from '../services/productService';
 
 const Shop = () => {
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
+  const categoryOptions = ['All', ...new Set(products.map((product) => product.category))];
   const filteredProducts = activeFilter === 'All' ? products : products.filter(product => product.category === activeFilter);
 
   const handleOpenProduct = (product) => {
@@ -34,6 +38,24 @@ const Shop = () => {
   };
 
   useEffect(() => {
+    const loadProducts = async () => {
+      setIsLoading(true);
+      setLoadError('');
+
+      try {
+        const data = await fetchProducts();
+        setProducts(data);
+      } catch (error) {
+        setLoadError(error.message || 'Failed to load products.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  useEffect(() => {
     if (!selectedProduct) return;
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') handleCloseProduct();
@@ -51,40 +73,28 @@ const Shop = () => {
       </section>
 
       <section className={styles.filters}>
-        <button
-          className={`${styles.filterBtn} ${activeFilter === 'All' ? styles.active : ''}`}
-          onClick={() => setActiveFilter('All')}
-        >
-          All
-        </button>
-        <button
-          className={`${styles.filterBtn} ${activeFilter === 'Women' ? styles.active : ''}`}
-          onClick={() => setActiveFilter('Women')}
-        >
-          Women
-        </button>
-        <button
-          className={`${styles.filterBtn} ${activeFilter === 'Men' ? styles.active : ''}`}
-          onClick={() => setActiveFilter('Men')}
-        >
-          Men
-        </button>
-        <button
-          className={`${styles.filterBtn} ${activeFilter === 'Accessories' ? styles.active : ''}`}
-          onClick={() => setActiveFilter('Accessories')}
-        >
-          Accessories
-        </button>
-        <button
-          className={`${styles.filterBtn} ${activeFilter === 'New Arrivals' ? styles.active : ''}`}
-          onClick={() => setActiveFilter('New Arrivals')}
-        >
-          New Arrivals
-        </button>
+        {categoryOptions.map((category) => (
+          <button
+            key={category}
+            className={`${styles.filterBtn} ${activeFilter === category ? styles.active : ''}`}
+            onClick={() => setActiveFilter(category)}
+          >
+            {category}
+          </button>
+        ))}
       </section>
 
       <section className={styles.products}>
-        {filteredProducts.length === 0 ? (
+        {isLoading ? (
+          <div className={styles.emptyProductsState}>
+            <h3>Loading products...</h3>
+          </div>
+        ) : loadError ? (
+          <div className={styles.emptyProductsState}>
+            <h3>Unable to load products</h3>
+            <p>{loadError}</p>
+          </div>
+        ) : filteredProducts.length === 0 ? (
           <div className={styles.emptyProductsState}>
             <h3>No items found</h3>
             <p>Try a different category to browse more of the collection.</p>
