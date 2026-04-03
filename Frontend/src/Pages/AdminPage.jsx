@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import AdminLogin from '../Components/Admin/AdminLogin';
 import AdminDashboard from '../Components/Admin/AdminDashboard';
-import { loginAdmin, getAdminProfile } from '../services/authService';
-import { fetchProducts, createProduct, deleteProduct } from '../services/productService';
-import { getAdminToken, setAdminToken, clearAdminToken } from '../utils/adminAuth';
+import { loginAdmin, logoutAdmin, getAdminProfile } from '../services/authService';
+import { fetchProducts, createProduct, updateProduct, deleteProduct } from '../services/productService';
 import styles from './AdminPage.module.css';
 
 const AdminPage = () => {
-  const [token, setToken] = useState(getAdminToken());
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [products, setProducts] = useState([]);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
@@ -31,18 +30,11 @@ const AdminPage = () => {
 
   useEffect(() => {
     const validateAuth = async () => {
-      const existingToken = getAdminToken();
-      if (!existingToken) {
-        setIsCheckingAuth(false);
-        return;
-      }
-
       try {
-        await getAdminProfile(existingToken);
-        setToken(existingToken);
+        await getAdminProfile();
+        setIsAuthenticated(true);
       } catch {
-        clearAdminToken();
-        setToken('');
+        setIsAuthenticated(false);
       } finally {
         setIsCheckingAuth(false);
       }
@@ -52,22 +44,21 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!token) {
+    if (!isAuthenticated) {
       setProducts([]);
       return;
     }
 
     loadProducts();
-  }, [token]);
+  }, [isAuthenticated]);
 
   const handleLogin = async (credentials) => {
     setLoginError('');
     setIsLoggingIn(true);
 
     try {
-      const result = await loginAdmin(credentials);
-      setAdminToken(result.token);
-      setToken(result.token);
+      await loginAdmin(credentials);
+      setIsAuthenticated(true);
       setActionMessage('');
       setActionError('');
     } catch (error) {
@@ -77,9 +68,13 @@ const AdminPage = () => {
     }
   };
 
-  const handleLogout = () => {
-    clearAdminToken();
-    setToken('');
+  const handleLogout = async () => {
+    try {
+      await logoutAdmin();
+    } catch {
+      // Clear state even if the request fails
+    }
+    setIsAuthenticated(false);
     setActionMessage('');
     setActionError('');
   };
@@ -97,7 +92,7 @@ const AdminPage = () => {
       formData.append('description', formValues.description);
       formData.append('image', formValues.image);
 
-      await createProduct(token, formData);
+      await createProduct(formData);
       setActionMessage('Product created successfully.');
       resetForm();
       await loadProducts();
@@ -108,12 +103,38 @@ const AdminPage = () => {
     }
   };
 
+  const handleUpdateProduct = async (productId, formValues, done) => {
+    setIsSubmitting(true);
+    setActionError('');
+    setActionMessage('');
+
+    try {
+      const formData = new FormData();
+      formData.append('name', formValues.name);
+      formData.append('price', formValues.price);
+      formData.append('category', formValues.category);
+      formData.append('description', formValues.description);
+      if (formValues.image) {
+        formData.append('image', formValues.image);
+      }
+
+      await updateProduct(productId, formData);
+      setActionMessage('Product updated successfully.');
+      done();
+      await loadProducts();
+    } catch (error) {
+      setActionError(error.message || 'Failed to update product.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleDeleteProduct = async (productId) => {
     setActionError('');
     setActionMessage('');
 
     try {
-      await deleteProduct(token, productId);
+      await deleteProduct(productId);
       setActionMessage('Product deleted successfully.');
       await loadProducts();
     } catch (error) {
@@ -125,7 +146,7 @@ const AdminPage = () => {
     return <div className={styles.status}>Checking admin session...</div>;
   }
 
-  if (!token) {
+  if (!isAuthenticated) {
     return (
       <div className={styles.adminPage}>
         <AdminLogin onLogin={handleLogin} isLoading={isLoggingIn} errorMessage={loginError} />
@@ -141,6 +162,7 @@ const AdminPage = () => {
         <AdminDashboard
           products={products}
           onCreateProduct={handleCreateProduct}
+          onUpdateProduct={handleUpdateProduct}
           onDeleteProduct={handleDeleteProduct}
           onLogout={handleLogout}
           isSubmitting={isSubmitting}

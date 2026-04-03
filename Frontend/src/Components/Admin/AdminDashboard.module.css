@@ -54,16 +54,6 @@
   font-family: inherit;
 }
 
-.form button {
-  margin-top: 0.5rem;
-  border: 1px solid var(--color-primary);
-  background-color: var(--color-primary);
-  color: var(--color-bg-light);
-  border-radius: 8px;
-  padding: 0.75rem;
-  cursor: pointer;
-}
-
 .productList {
   list-style: none;
   padding: 0;
@@ -101,12 +91,49 @@
   font-size: 0.9rem;
 }
 
-.productItem button {
+.productActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.productActions button,
+.productItem > button {
   border: 1px solid rgba(220, 38, 38, 0.3);
   background-color: transparent;
   color: var(--color-error);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.editBtn {
+  border: 1px solid var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.formActions button[type="submit"] {
+  flex: 1;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+  border-radius: 8px;
+  padding: 0.75rem;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  border: 1px solid var(--color-secondary) !important;
+  background-color: transparent !important;
+  color: var(--color-secondary) !important;
+  border-radius: 8px;
+  padding: 0.75rem;
   cursor: pointer;
 }
 

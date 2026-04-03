@@ -17,12 +17,10 @@ const fetchProducts = async () => {
   return data.map(normalizeProduct);
 };
 
-const createProduct = async (token, formData) => {
+const createProduct = async (formData) => {
   const response = await fetch(`${API_BASE_URL}/products`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: 'include',
     body: formData,
   });
 
@@ -35,12 +33,26 @@ const createProduct = async (token, formData) => {
   return normalizeProduct(data);
 };
 
-const deleteProduct = async (token, productId) => {
+const updateProduct = async (productId, formData) => {
+  const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
+    method: 'PUT',
+    credentials: 'include',
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to update product');
+  }
+
+  return normalizeProduct(data);
+};
+
+const deleteProduct = async (productId) => {
   const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
     method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: 'include',
   });
 
   const data = await response.json();
@@ -52,4 +64,4 @@ const deleteProduct = async (token, productId) => {
   return data;
 };
 
-export { fetchProducts, createProduct, deleteProduct };
+export { fetchProducts, createProduct, updateProduct, deleteProduct };

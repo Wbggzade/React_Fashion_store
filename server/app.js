@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/authRoutes.js';
@@ -28,8 +29,10 @@ app.use(
 
       callback(new Error('Not allowed by CORS'));
     },
+    credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(express.json());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

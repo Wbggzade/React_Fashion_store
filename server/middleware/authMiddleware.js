@@ -3,13 +3,23 @@ import Admin from '../models/Admin.js';
 
 const protectAdmin = async (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization || '';
+    let token = '';
 
-    if (!authHeader.startsWith('Bearer ')) {
+    // Prefer httpOnly cookie
+    if (req.cookies?.admin_token) {
+      token = req.cookies.admin_token;
+    } else {
+      // Fallback to Authorization header for backward compat
+      const authHeader = req.headers.authorization || '';
+      if (authHeader.startsWith('Bearer ')) {
+        token = authHeader.split(' ')[1];
+      }
+    }
+
+    if (!token) {
       return res.status(401).json({ message: 'Not authorized: token missing' });
     }
 
-    const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (decoded.role !== 'admin') {
