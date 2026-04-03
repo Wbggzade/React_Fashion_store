@@ -93,9 +93,72 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
+const updateProduct = async (req, res, next) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid product id' });
+    }
+
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    const { name, price, category, description } = req.body;
+
+    if (name !== undefined) {
+      const trimmedName = String(name).trim();
+      if (!trimmedName) {
+        return res.status(400).json({ message: 'Name cannot be empty' });
+      }
+      product.name = trimmedName;
+    }
+
+    if (price !== undefined && price !== null && price !== '') {
+      const numericPrice = Number(price);
+      if (Number.isNaN(numericPrice) || numericPrice < 0) {
+        return res.status(400).json({ message: 'Price must be a valid non-negative number' });
+      }
+      product.price = numericPrice;
+    }
+
+    if (category !== undefined) {
+      const trimmedCategory = String(category).trim();
+      if (!trimmedCategory) {
+        return res.status(400).json({ message: 'Category cannot be empty' });
+      }
+      product.category = trimmedCategory;
+    }
+
+    if (description !== undefined) {
+      product.description = String(description).trim();
+    }
+
+    if (req.file) {
+      // Remove old image file if it exists
+      if (product.image) {
+        const oldFilename = path.basename(product.image);
+        const oldPath = path.join(uploadsDir, oldFilename);
+        try {
+          await fs.unlink(oldPath);
+        } catch {
+          // Safe to ignore if file was already removed
+        }
+      }
+      product.image = `/uploads/${req.file.filename}`;
+    }
+
+    const updated = await product.save();
+    return res.status(200).json(updated);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export {
   getProducts,
   getProductById,
   createProduct,
   deleteProduct,
+  updateProduct,
 };
