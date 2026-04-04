@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-const defaultAllowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+const defaultAllowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'];
 const envAllowedOrigins = (process.env.FRONTEND_ORIGIN || '')
   .split(',')
   .map((origin) => origin.trim())

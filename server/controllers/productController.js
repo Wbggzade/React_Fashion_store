@@ -8,9 +8,27 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const uploadsDir = path.join(__dirname, '..', 'uploads');
 
-const getProducts = async (_req, res, next) => {
+const parseBool = (value) => {
+  if (value === true || value === 'true') return true;
+  if (value === false || value === 'false') return false;
+  return undefined;
+};
+
+const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
+    const filter = {};
+    if (req.query.isTrending === 'true') {
+      filter.isTrending = true;
+    }
+
+    let query = Product.find(filter).sort({ createdAt: -1 });
+
+    const limit = parseInt(req.query.limit, 10);
+    if (Number.isFinite(limit) && limit > 0) {
+      query = query.limit(limit);
+    }
+
+    const products = await query;
     return res.status(200).json(products);
   } catch (error) {
     return next(error);
@@ -51,12 +69,15 @@ const createProduct = async (req, res, next) => {
       return res.status(400).json({ message: 'Product image is required' });
     }
 
+    const isTrending = parseBool(req.body.isTrending);
+
     const product = await Product.create({
       name: String(name).trim(),
       price: numericPrice,
       category: String(category).trim(),
       description: description ? String(description).trim() : '',
       image: `/uploads/${req.file.filename}`,
+      ...(isTrending !== undefined && { isTrending }),
     });
 
     return res.status(201).json(product);
@@ -132,6 +153,11 @@ const updateProduct = async (req, res, next) => {
 
     if (description !== undefined) {
       product.description = String(description).trim();
+    }
+
+    const isTrending = parseBool(req.body.isTrending);
+    if (isTrending !== undefined) {
+      product.isTrending = isTrending;
     }
 
     if (req.file) {

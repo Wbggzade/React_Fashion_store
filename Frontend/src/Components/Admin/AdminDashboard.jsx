@@ -8,6 +8,7 @@ const initialFormState = {
   category: '',
   description: '',
   image: null,
+  isTrending: false,
 };
 
 const AdminDashboard = ({
@@ -27,10 +28,10 @@ const AdminDashboard = ({
   const isEditing = editingProductId !== null;
 
   const handleChange = (event) => {
-    const { name, value, files } = event.target;
+    const { name, value, files, type, checked } = event.target;
     setFormState((prev) => ({
       ...prev,
-      [name]: name === 'image' ? files?.[0] ?? null : value,
+      [name]: type === 'checkbox' ? checked : name === 'image' ? files?.[0] ?? null : value,
     }));
   };
 
@@ -48,6 +49,7 @@ const AdminDashboard = ({
       category: product.category || '',
       description: product.description || '',
       image: null, // image is optional on update
+      isTrending: product.isTrending ?? false,
     });
     setFormError('');
   };
@@ -113,6 +115,16 @@ const AdminDashboard = ({
             <label htmlFor="image">{isEditing ? 'Replace Image (optional)' : 'Image'}</label>
             <input id="image" name="image" type="file" accept="image/*" onChange={handleChange} required={!isEditing} />
 
+            <label className={styles.checkboxLabel}>
+              <input
+                type="checkbox"
+                name="isTrending"
+                checked={formState.isTrending}
+                onChange={handleChange}
+              />
+              Mark as Trending
+            </label>
+
             {formError ? <p className={styles.error}>{formError}</p> : null}
             {actionError ? <p className={styles.error}>{actionError}</p> : null}
             {actionMessage ? <p className={styles.success}>{actionMessage}</p> : null}
@@ -140,7 +152,10 @@ const AdminDashboard = ({
                 <li key={product._id || product.id} className={styles.productItem}>
                   <img src={product.image} alt={product.name} />
                   <div>
-                    <h3>{product.name}</h3>
+                    <h3>
+                      {product.name}
+                      {product.isTrending && <span className={styles.trendingBadge}>Trending</span>}
+                    </h3>
                     <p>{product.category} - ${Number(product.price).toFixed(2)}</p>
                   </div>
                   <div className={styles.productActions}>

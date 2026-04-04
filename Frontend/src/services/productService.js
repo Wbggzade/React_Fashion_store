@@ -17,6 +17,17 @@ const fetchProducts = async () => {
   return data.map(normalizeProduct);
 };
 
+const fetchTrendingProducts = async (limit = 4) => {
+  const response = await fetch(`${API_BASE_URL}/products?isTrending=true&limit=${limit}`);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to load trending products');
+  }
+
+  return data.map(normalizeProduct);
+};
+
 const createProduct = async (formData) => {
   const response = await fetch(`${API_BASE_URL}/products`, {
     method: 'POST',
@@ -64,4 +75,4 @@ const deleteProduct = async (productId) => {
   return data;
 };
 
-export { fetchProducts, createProduct, updateProduct, deleteProduct };
+export { fetchProducts, fetchTrendingProducts, createProduct, updateProduct, deleteProduct };

@@ -36,3 +36,15 @@
   }
 }
 
+.statusText {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: 1rem 0;
+}
+
+.errorText {
+  text-align: center;
+  color: var(--color-error);
+  padding: 1rem 0;
+}
+

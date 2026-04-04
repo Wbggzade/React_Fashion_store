@@ -15,9 +15,3 @@ export const featuredCollections = [
     description: `Finish every look with ${products[4].name} and ${products[5].name}.`,
   },
 ];
-
-/** Featured items shown in the Home page carousel. */
-export const featuredCarouselItems = [products[0], products[3], products[4], products[7]].map((item) => ({
-  title: item.name,
-  description: `${item.category} - $${item.price.toFixed(2)}`,
-}));

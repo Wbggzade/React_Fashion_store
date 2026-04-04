@@ -91,6 +91,7 @@ const AdminPage = () => {
       formData.append('category', formValues.category);
       formData.append('description', formValues.description);
       formData.append('image', formValues.image);
+      formData.append('isTrending', formValues.isTrending);
 
       await createProduct(formData);
       setActionMessage('Product created successfully.');
@@ -114,6 +115,7 @@ const AdminPage = () => {
       formData.append('price', formValues.price);
       formData.append('category', formValues.category);
       formData.append('description', formValues.description);
+      formData.append('isTrending', formValues.isTrending);
       if (formValues.image) {
         formData.append('image', formValues.image);
       }
